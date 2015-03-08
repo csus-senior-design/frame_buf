@@ -6,7 +6,7 @@ module memory_tb;
   reg [7:0] wr_data;
   wire [7:0] rd_data;
 
-  data_mem #(.DATA_WIDTH(8), .ADDR_WIDTH(3))
+  data_mem #(.DATA_WIDTH(16), .ADDR_WIDTH(3))
            uut (.clk(clk), .wr_en(wr_en), .rd_en(rd_en), .reset(reset),
             .wr_addr(wr_addr), .rd_addr(rd_addr), .wr_data(wr_data),
             .rd_data(rd_data));
@@ -18,7 +18,7 @@ module memory_tb;
     $monitor("rd_addr: %h, rd_data: %h", rd_addr, rd_data);
     
     clk = 1'b0;
-    wr_data = 8'h01;
+    wr_data = 16'h01;
     wr_en = 1'b1;
     rd_en = 1'b1;
     reset = 1'b0;

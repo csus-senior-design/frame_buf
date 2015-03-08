@@ -3,7 +3,7 @@
 `define DEASSERT 1'b1
 `endif
 
-module data_mem #(parameter DATA_WIDTH = 16, ADDR_WIDTH = 4, MEM_DEPTH = 1 << ADDR_WIDTH)
+module data_mem #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 4, MEM_DEPTH = 1 << ADDR_WIDTH)
   (
       input [ADDR_WIDTH - 1:0] wr_addr, rd_addr,
       input [DATA_WIDTH - 1:0] wr_data,
