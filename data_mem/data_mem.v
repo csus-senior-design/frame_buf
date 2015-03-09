@@ -23,10 +23,10 @@ module data_mem #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 4, MEM_DEPTH = 1 << AD
     end
     
     always @(*) begin
-            if (rd_en == `ASSERT)
-            rd_data <= mem[rd_addr];
+        if (rd_en == `ASSERT)
+          rd_data <= mem[rd_addr];
         else
-            rd_data <= {DATA_WIDTH{1'bZ}};
+          rd_data <= {DATA_WIDTH{1'bZ}};
     end
     
 endmodule
