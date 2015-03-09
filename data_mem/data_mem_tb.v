@@ -25,7 +25,7 @@ module memory_tb;
     wr_addr = 3'h0;
     rd_addr = 3'h0;
 
-    #5 wr_en = 1'b0;
+    #15 wr_en = 1'b0;
     reset = 1'b1;
 
     #10 wr_addr = wr_addr + 3'h1;
