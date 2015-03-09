@@ -8,38 +8,40 @@
 module frame_buf #(DATA_WIDTH = 24, ADDR_WIDTH = 3,
                     MEM_DEPTH = 1 << ADDR_WIDTH, NUM_BUFS = 1)
   (
-    input clk, reset, wr_en_in, rd_en_in,
+    input wr_clk, rd_clk, reset, wr_en_in, rd_en_in,
     input [DATA_WIDTH - 1:0] data_in,
     output [DATA_WIDTH - 1:0] data_out
   );
   
-  parameter IDLE = 1'h0, FILL = 1'h1;
+  parameter IDLE = 1'h0, READ = FILL = 1'h1;
   
   reg wr_en, rd_en;
   reg [ADDR_WIDTH - 1:0] wr_addr, rd_addr;
-  reg [1:0] curr_state, next_state;
+  reg curr_state, next_state, rd_curr_state, rd_next_state;
   
-  data_mem #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(NUM_BUFS * ADDR_WIDTH))
-           mem (.clk(clk), .wr_en(wr_en), .rd_en(rd_en), .reset(reset),
+  data_mem #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH))
+           mem (.clk(wr_clk), .wr_en(wr_en), .rd_en(rd_en), .reset(reset),
             .wr_addr(wr_addr), .rd_addr(rd_addr), .wr_data(data_in),
             .rd_data(data_out));
             
-  always @(posedge clk) begin
-    if (reset == `ASSERT) begin
-      curr_state <= FILL;
-      rd_en <= `DEASSERT;
-      wr_en <= `DEASSERT;
+  always @(posedge wr_clk) begin
+    if (reset == `ASSERT)
+      curr_state <= IDLE;
     end else begin
       curr_state <= next_state;
   end
   
-  always @(posedge clk) begin
+  always @(posedge wr_clk) begin
     case (curr_state)
       IDLE:   begin
+                if (rd_addr <= wr_addr)
+                  mem_rdy <= 1'b0;
                 if (wr_en_in == `ASSERT) begin
                   next_state <= FILL;
                   wr_addr <= {ADDR_WIDTH{1'b0}};
-                end
+                  wr_en <= `ASSERT;
+                end else
+                  wr_en <= `DEASSERT;
               end
             
       FILL:   begin
@@ -55,9 +57,34 @@ module frame_buf #(DATA_WIDTH = 24, ADDR_WIDTH = 3,
     endcase
   end
   
-  always @(*) begin
-    if (rd_en_in == `ASSERT && mem_rdy <= 1'b1)
-      rd_en <= `ASSERT;
+  always @(posedge rd_clk) begin
+    if (reset == `ASSERT)
+      rd_curr_state <= IDLE;
+    end else begin
+      rd_curr_state <= rd_next_state;
+  end
+  
+  always @(posedge rd_clk) begin
+    case (rd_curr_state)
+      IDLE:   begin
+                if (rd_en_in == `ASSERT && mem_rdy == 1'b1) begin
+                  rd_next_state <= READ;
+                  rd_addr <= {ADDR_WIDTH{1'b0}};
+                  rd_en <= `ASSERT;
+                end else
+                  rd_en <= `DEASSERT;
+              end
+            
+      READ:   begin
+                if (rd_addr == {ADDR_WIDTH{1'b1}})
+                  rd_next_state <= IDLE;
+                else if (rd_en_in == `ASSERT) begin
+                  rd_en <= `ASSERT;
+                  rd_addr <= wr_addr + 1;
+                end else
+                  rd_en <= `DEASSERT;
+              end
+    endcase
   end
 
 endmodule
