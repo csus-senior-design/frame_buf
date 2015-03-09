@@ -1,3 +1,5 @@
+`include "frame_buf.v"
+
 module frame_buf_tb;
 
   reg wr_clk, rd_clk, reset, wr_en_in, rd_en_in;
