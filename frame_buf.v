@@ -5,7 +5,7 @@
 
 `include "data_mem/data_mem.v"
 
-module frame_buf #(DATA_WIDTH = 24, ADDR_WIDTH = 3,
+module frame_buf #(parameter DATA_WIDTH = 24, ADDR_WIDTH = 3,
                     MEM_DEPTH = 1 << ADDR_WIDTH, NUM_BUFS = 1)
   (
     input wr_clk, rd_clk, reset, wr_en_in, rd_en_in,
