@@ -11,7 +11,7 @@ module memory_tb;
             .wr_addr(wr_addr), .rd_addr(rd_addr), .wr_data(wr_data),
             .rd_data(rd_data));
             
-  always #20 clk = ~clk;
+  always #10 clk = ~clk;
 
   initial begin
     $monitor("wr_addr: %h, wr_data: %h", wr_addr, wr_data);
