@@ -13,7 +13,7 @@ module frame_buf #(parameter DATA_WIDTH = 24, ADDR_WIDTH = 3,
     output [DATA_WIDTH - 1:0] data_out
   );
   
-  parameter IDLE = 1'h0, READ = FILL = 1'h1;
+  parameter IDLE = 1'h0, FILL = 1'h1, READ = 1'h1;
   
   reg wr_en, rd_en;
   reg [ADDR_WIDTH - 1:0] wr_addr, rd_addr;
