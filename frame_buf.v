@@ -27,7 +27,7 @@ module frame_buf #(DATA_WIDTH = 24, ADDR_WIDTH = 3,
   always @(posedge wr_clk) begin
     if (reset == `ASSERT)
       curr_state <= IDLE;
-    end else begin
+    else
       curr_state <= next_state;
   end
   
@@ -60,7 +60,7 @@ module frame_buf #(DATA_WIDTH = 24, ADDR_WIDTH = 3,
   always @(posedge rd_clk) begin
     if (reset == `ASSERT)
       rd_curr_state <= IDLE;
-    end else begin
+    else
       rd_curr_state <= rd_next_state;
   end
   

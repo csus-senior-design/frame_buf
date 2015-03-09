@@ -6,7 +6,7 @@ module frame_buf_tb;
 
   frame_buf uut(.wr_clk(wr_clk), .rd_clk(rd_clk), .reset(reset),
                 .wr_en_in(wr_en_in), .rd_en_in(rd_en_in),
-                .data_in(data_in), data_out(data_out));
+                .data_in(data_in), .data_out(data_out));
 
   always #10 wr_clk = ~wr_clk;
 
