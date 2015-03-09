@@ -45,6 +45,7 @@ module memory_tb;
     #15 rd_addr = rd_addr + 3'h1;
 
     #10 $finish;
+  end
     
 /*
   Conditional Environment Settings for the following:
@@ -71,9 +72,6 @@ module memory_tb;
 // Xilinx ISIM
 `ifdef XILINX_ISIM
 `endif
-endmodule
-  end
-
 
 `ifndef IVERILOG
     initial $vcdpluson;
