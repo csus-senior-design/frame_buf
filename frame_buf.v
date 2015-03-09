@@ -19,7 +19,7 @@ module frame_buf #(DATA_WIDTH = 24, ADDR_WIDTH = 3,
   reg [ADDR_WIDTH - 1:0] wr_addr, rd_addr;
   reg [1:0] curr_state, next_state;
   
-  data_mem #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH))
+  data_mem #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(NUM_BUFS * ADDR_WIDTH))
            mem (.clk(clk), .wr_en(wr_en), .rd_en(rd_en), .reset(reset),
             .wr_addr(wr_addr), .rd_addr(rd_addr), .wr_data(data_in),
             .rd_data(data_out));
@@ -49,8 +49,8 @@ module frame_buf #(DATA_WIDTH = 24, ADDR_WIDTH = 3,
                   mem_rdy <= 1'b1;
                   wr_en <= `ASSERT;
                   wr_addr <= wr_addr + 1;
-                end else begin
-                  
+                end else
+                  wr_en <= `DEASSERT;
               end
     endcase
   end
