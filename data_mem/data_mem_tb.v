@@ -28,13 +28,13 @@ module memory_tb;
     #15 wr_en = 1'b0;
     reset = 1'b1;
 
-    #10 wr_addr = wr_addr + 3'h1;
+    #20 wr_addr = wr_addr + 3'h1;
     wr_data = 16'h02;
 
-    #10 wr_addr = wr_addr + 3'h1;
+    #20 wr_addr = wr_addr + 3'h1;
     wr_data = 16'h03;
 
-    #10 wr_addr = wr_addr + 3'h1;
+    #20 wr_addr = wr_addr + 3'h1;
     wr_data = 16'h04;
     rd_en = 1'b0;
 
@@ -45,6 +45,33 @@ module memory_tb;
     #15 rd_addr = rd_addr + 3'h1;
 
     #10 $finish;
+    
+/*
+  Conditional Environment Settings for the following:
+    - Icarus Verilog
+    - VCS
+    - Altera Modelsim
+    - Xilinx ISIM
+*/
+// Icarus Verilog
+`ifdef IVERILOG
+    initial $dumpfile("vcdbasic.vcd");
+    initial $dumpvars();
+`endif
+
+// VCS
+`ifdef VCS
+    initial $vcdpluson;
+`endif
+
+// Altera Modelsim
+`ifdef MODEL_TECH
+`endif
+
+// Xilinx ISIM
+`ifdef XILINX_ISIM
+`endif
+endmodule
   end
 
 
