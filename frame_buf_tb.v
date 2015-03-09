@@ -16,14 +16,13 @@ module frame_buf_tb;
     wr_clk = 1'b0;
     rd_clk = 1'b0;
     reset = 1'b0;
-    wr_en_in = 1'b1;
+    wr_en_in = 1'b0;
     rd_en_in = 1'b1;
-    data_in = 23'h1;
+    data_in = 24'h1;
 
     $monitor("data_out: %h", data_out);
 
     #20 reset = 1'b1;
-    wr_en_in = 1'b0;
 
     #20 data_in = 24'h2;
 
