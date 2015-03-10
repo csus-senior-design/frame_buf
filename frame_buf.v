@@ -32,7 +32,6 @@ module frame_buf #(parameter DATA_WIDTH = 24, ADDR_WIDTH = 3,
   end
   
   always @(*) begin
-    next_state <= IDLE;
     case (curr_state)
       IDLE:   begin
                 wr_addr <= {ADDR_WIDTH{1'b0}};
@@ -71,7 +70,6 @@ module frame_buf #(parameter DATA_WIDTH = 24, ADDR_WIDTH = 3,
   end
   
   always @(*) begin
-    rd_next_state <= IDLE;
     case (rd_curr_state)
       IDLE:   begin
                 rd_addr <= {ADDR_WIDTH{1'b0}};
