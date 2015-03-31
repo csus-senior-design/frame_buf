@@ -48,7 +48,7 @@ module data_mem_alt #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 29, MEM_DEPTH = 1 
       
       WRITE:  begin
                 if (wr_en == `ASSERT_L && rd_en == `DEASSERT_L
-                      prev_wr_addr != wr_addr && rd_en == `DEASSERT_L) begin
+                      && prev_wr_addr != wr_addr && rd_en == `DEASSERT_L) begin
                   mem[wr_addr] <= wr_data;
                   prev_wr_addr <= wr_addr;
                 end
@@ -57,7 +57,7 @@ module data_mem_alt #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 29, MEM_DEPTH = 1 
       
       READ:   begin
                 if (rd_en == `ASSERT_L && wr_en == `DEASSERT_L
-                      prev_rd_addr != rd_addr && wr_en == `DEASSERT_L) begin
+                      && prev_rd_addr != rd_addr && wr_en == `DEASSERT_L) begin
                   rd_data <= mem[rd_addr];
                   prev_rd_addr <= rd_addr;
                 end
