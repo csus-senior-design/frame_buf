@@ -28,7 +28,7 @@ module data_mem_alt_tb;
     #15 wr_en = 1'b0;
     reset = 1'b1;
 
-    #60 wr_addr = wr_addr + 3'h1;
+    #50 wr_addr = wr_addr + 3'h1;
     wr_data = 16'h02;
 
     #20 wr_addr = wr_addr + 3'h1;
