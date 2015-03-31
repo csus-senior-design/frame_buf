@@ -22,8 +22,8 @@ module data_mem_alt_tb;
     wr_en = 1'b1;
     rd_en = 1'b1;
     reset = 1'b0;
-    wr_addr = 3'h0;
-    rd_addr = 3'h0;
+    wr_addr = 3'h1;
+    rd_addr = 3'h1;
 
     #15 wr_en = 1'b0;
     reset = 1'b1;
