@@ -20,6 +20,7 @@ module data_mem_alt #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 29, MEM_DEPTH = 1 
   
   reg [DATA_WIDTH - 1:0] mem [MEM_DEPTH - 1:0];
   reg [ADDR_WIDTH - 1:0] prev_rd_addr, prev_wr_addr;
+  reg [1:0] curr_state, next_state;
   integer i;
 
   /* Begin interface logic */
