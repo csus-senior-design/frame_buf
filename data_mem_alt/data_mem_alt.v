@@ -24,7 +24,7 @@ module data_mem_alt #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 29, MEM_DEPTH = 1 
   integer i;
 
   /* Begin interface logic */
-  always @(posedge pll0_pll_clk_clk) begin
+  always @(posedge clk) begin
     if (reset == `ASSERT_L) begin
       for (i = 0; i < MEM_DEPTH; i = i + 1)
         mem[i] <= {DATA_WIDTH{1'b0}};
