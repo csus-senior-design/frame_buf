@@ -46,7 +46,7 @@ module data_mem_alt_tb;
 
     #40 rd_addr = rd_addr + 3'h1;
 
-    #10 $finish;
+    #40 $finish;
   end
     
 /*
