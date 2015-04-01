@@ -40,7 +40,7 @@ module data_mem_alt_tb;
     #20 wr_en = 1'b1;
     rd_en = 1'b0;
 
-    #40 rd_addr = rd_addr + 3'h1;
+    #50 rd_addr = rd_addr + 3'h1;
 
     #40 rd_addr = rd_addr + 3'h1;
 
