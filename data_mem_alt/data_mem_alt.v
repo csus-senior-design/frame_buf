@@ -16,7 +16,7 @@ module data_mem_alt #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 29, MEM_DEPTH = 1 
   );
   
    /* Define the required states. */
-  parameter IDLE = 2'h0, WRITE = 2'h1, READ = 2'h2;
+  parameter INIT = 2'h0, IDLE = 2'h1, WRITE = 2'h2, READ = 2'h3;
   
   reg [DATA_WIDTH - 1:0] mem [MEM_DEPTH - 1:0];
   reg [ADDR_WIDTH - 1:0] prev_rd_addr, prev_wr_addr;
@@ -32,11 +32,12 @@ module data_mem_alt #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 29, MEM_DEPTH = 1 
       prev_wr_addr <= {ADDR_WIDTH{1'h0}};
       rd_data <= 29'hZ;
       curr_state <= IDLE;
-      next_state <= IDLE;
     end else
       curr_state <= next_state;
     
     case (curr_state)
+      INIT:   next_state <= IDLE;
+      
       IDLE:   begin
                 if (wr_en == `ASSERT_L && rd_en == `DEASSERT_L
                       && prev_wr_addr != wr_addr)
@@ -45,7 +46,7 @@ module data_mem_alt #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 29, MEM_DEPTH = 1 
                           && prev_rd_addr != rd_addr)
                   next_state <= READ;
                 else
-                  next_state <= IDLE;
+                next_state <= IDLE;
               end
       
       WRITE:  begin
@@ -63,7 +64,7 @@ module data_mem_alt #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 29, MEM_DEPTH = 1 
                   rd_data <= mem[rd_addr];
                   prev_rd_addr <= rd_addr;
                 end
-                  next_state <= IDLE;
+                next_state <= IDLE;
               end
     endcase
   end
