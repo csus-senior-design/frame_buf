@@ -28,21 +28,23 @@ module data_mem_alt_tb;
     #15 wr_en = 1'b0;
     reset = 1'b1;
 
-    #55 wr_addr = wr_addr + 3'h1;
+    #60 wr_addr = wr_addr + 3'h1;
     wr_data = 16'h02;
 
-    #20 wr_addr = wr_addr + 3'h1;
+    #40 wr_addr = wr_addr + 3'h1;
     wr_data = 16'h03;
 
-    #20 wr_addr = wr_addr + 3'h1;
+    #40 wr_addr = wr_addr + 3'h1;
     wr_data = 16'h04;
+    
+    #20 wr_en = 1'b1;
     rd_en = 1'b0;
 
-    #15 rd_addr = rd_addr + 3'h1;
+    #40 rd_addr = rd_addr + 3'h1;
 
-    #15 rd_addr = rd_addr + 3'h1;
+    #40 rd_addr = rd_addr + 3'h1;
 
-    #15 rd_addr = rd_addr + 3'h1;
+    #40 rd_addr = rd_addr + 3'h1;
 
     #10 $finish;
   end
