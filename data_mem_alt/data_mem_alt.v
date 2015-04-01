@@ -32,40 +32,38 @@ module data_mem_alt #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 29, MEM_DEPTH = 1 
       prev_wr_addr <= {ADDR_WIDTH{1'h0}};
       rd_data <= 29'hZ;
       curr_state <= IDLE;
-      next_state <= IDLE;
     end else
-      curr_state <= next_state;
     
-    case (curr_state)
-      IDLE:   begin
-                if (wr_en == `ASSERT_L && rd_en == `DEASSERT_L
-                      && prev_wr_addr != wr_addr)
-                  next_state <= WRITE;
-                else if (rd_en == `ASSERT_L && wr_en == `DEASSERT_L
-                          && prev_rd_addr != rd_addr)
-                  next_state <= READ;
-                else
-                  next_state <= IDLE;
-              end
-      
-      WRITE:  begin
-                if (wr_en == `ASSERT_L && rd_en == `DEASSERT_L
-                      && prev_wr_addr != wr_addr) begin
-                  mem[wr_addr] <= wr_data;
-                  prev_wr_addr <= wr_addr;
+      case (curr_state)
+        IDLE:   begin
+                  if (wr_en == `ASSERT_L && rd_en == `DEASSERT_L
+                        && prev_wr_addr != wr_addr)
+                    curr_state <= WRITE;
+                  else if (rd_en == `ASSERT_L && wr_en == `DEASSERT_L
+                            && prev_rd_addr != rd_addr)
+                    curr_state <= READ;
+                  else
+                    curr_state <= IDLE;
                 end
-                next_state <= IDLE;
-              end
-      
-      READ:   begin
-                if (rd_en == `ASSERT_L && wr_en == `DEASSERT_L
-                      && prev_rd_addr != rd_addr) begin
-                  rd_data <= mem[rd_addr];
-                  prev_rd_addr <= rd_addr;
+        
+        WRITE:  begin
+                  if (wr_en == `ASSERT_L && rd_en == `DEASSERT_L
+                        && prev_wr_addr != wr_addr) begin
+                    mem[wr_addr] <= wr_data;
+                    prev_wr_addr <= wr_addr;
+                  end
+                  curr_state <= IDLE;
                 end
-                  next_state <= IDLE;
-              end
-    endcase
+        
+        READ:   begin
+                  if (rd_en == `ASSERT_L && wr_en == `DEASSERT_L
+                        && prev_rd_addr != rd_addr) begin
+                    rd_data <= mem[rd_addr];
+                    prev_rd_addr <= rd_addr;
+                  end
+                    curr_state <= IDLE;
+                end
+      endcase
   end
     
 endmodule
