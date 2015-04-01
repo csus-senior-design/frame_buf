@@ -31,7 +31,7 @@ module data_mem_alt #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 29, MEM_DEPTH = 1 
       prev_rd_addr <= {ADDR_WIDTH{1'h0}};
       prev_wr_addr <= {ADDR_WIDTH{1'h0}};
       rd_data <= 29'hZ;
-      curr_state <= INIT;
+      curr_state <= IDLE;
     end else
       curr_state <= next_state;
     
