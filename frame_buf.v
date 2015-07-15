@@ -17,6 +17,7 @@ module frame_buf #(parameter DATA_WIDTH = 24, ADDR_WIDTH = 3,
   
   reg wr_en, rd_en, mem_rdy;
   reg [ADDR_WIDTH - 1:0] wr_addr, rd_addr;
+  (* syn_encoding = "safe" *)
   reg curr_state, rd_curr_state;
   
   data_mem #(.DATA_WIDTH(DATA_WIDTH), .ADDR_WIDTH(ADDR_WIDTH))
